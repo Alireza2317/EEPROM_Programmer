@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "EEPROM_28C16")(type "KiCad")(uri "${KIPRJMOD}/EEPROM_28C16.kicad_sym")(options "")(descr ""))
+)
