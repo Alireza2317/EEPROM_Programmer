@@ -133,57 +133,10 @@ void setup() {
 	// seven segment display(common anode) data to decode it properly
 	//byte digits[10] = {0x81, 0xcf, 0x92, 0x86, 0xcc, 0xa4, 0xa0, 0x8f, 0x80, 0x84};
 
-
-	// ones place
-	for (byte value=0; value<256; value++) {
-		write_EEPROM(value, digits[value % 10]);
-	}
-	
-	// tens place	
-	for (byte value=0; value<256; value++) {
-		write_EEPROM(value+256, digits[(value/10) % 10]);
-	}
-	
-	// hunderds place
-	for (byte value=0; value<256; value++) {
-		write_EEPROM(value+512, digits[(value/100) % 10]);
+	for (byte value=0; value<10; value++) {
+		write_EEPROM(value, digits[value]);
 	}
 
-	// nothing
-	for (byte value=0; value<256; value++) {
-		write_EEPROM(value+512+256, 0x00);
-	}
-
-
-	// ----------- Other half of the chip ------------
-	// showing the two's complement method and numbers between -128 to +127
-	// ones place
-	for (byte value=-128; value<128; value++) {
-		// the (byte)value will treat the negative number as a two's complement
-		write_EEPROM((byte)value+1024, digits[abs(value) % 10]);
-	}
-	
-	// tens place
-	for (byte value=-128; value<128; value++) {
-		write_EEPROM((byte)value+1024+256, digits[(abs(value)/10) % 10]);
-	}
-	
-	// hundereds place
-	for (byte value=-128; value<128; value++) {
-		write_EEPROM((byte)value+1024+512, digits[(abs(value)/100) % 10]);
-	}
-
-	// the sign of the number
-	for (byte value=-128; value<128; value++) {
-		if (value < 0) {
-			// 0x01 is the code that will turn on only the middle led on the
-			// seven-segment display, to represent negative sign
-			write_EEPROM((byte)value+1024+512+256, 0x01);
-		}
-		else {
-			write_EEPROM((byte)value+1024+512+256, 0);
-		}
-	}
 }
 
 void loop() {
